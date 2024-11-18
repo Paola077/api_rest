@@ -56,4 +56,21 @@ public class BookController {
         booksRepository.deleteByIsbn(isbn);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+   @PutMapping("/{isbn}")
+    public ResponseEntity<Book> updatebook(@PathVariable String isbn, @RequestBody Book book) {
+        Optional<Book> optionalBook = booksRepository.findByIsbn(isbn);
+
+        if (optionalBook.isPresent()) {
+
+            Book bookExist = optionalBook.get();
+
+            bookExist.setTitle(book.getTitle());
+            bookExist.setAuthor(book.getAuthor());
+
+            booksRepository.save(bookExist);
+            return ResponseEntity.ok(bookExist);
+        }
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+   }
 }
