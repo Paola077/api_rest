@@ -35,7 +35,6 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
-
         Optional<Book> optionalBook =  booksRepository.findByIsbn(book.getIsbn());
 
         if (optionalBook.isPresent()) {
@@ -44,5 +43,17 @@ public class BookController {
 
         booksRepository.save(book);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<Book> deleteBookByIsbn(@PathVariable String isbn) {
+        Optional<Book> optionalBook = booksRepository.findByIsbn(isbn);
+
+        if (!optionalBook.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        booksRepository.deleteByIsbn(isbn);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

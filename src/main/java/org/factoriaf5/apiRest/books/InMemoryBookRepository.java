@@ -7,6 +7,7 @@ public class InMemoryBookRepository implements BooksRepository{
 
     public InMemoryBookRepository() {
         booksDB.add(new Book("A123", "title 1", "Author 1"));
+        booksDB.add(new Book("A124", "title 2", "Author 2"));
     }
 
     @Override
@@ -30,5 +31,10 @@ public class InMemoryBookRepository implements BooksRepository{
     public Optional<Book> save(Book book) {
         booksDB.add(book);
         return Optional.empty();
+    }
+
+    @Override
+    public void deleteByIsbn(String isbn) {
+        booksDB.removeIf(book -> book.getIsbn().equals(isbn));
     }
 }
