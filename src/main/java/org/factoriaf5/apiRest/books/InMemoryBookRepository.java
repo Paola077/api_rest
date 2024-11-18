@@ -25,4 +25,10 @@ public class InMemoryBookRepository implements BooksRepository{
 
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Book> save(Book book) {
+        booksDB.add(book);
+        return Optional.empty();
+    }
 }

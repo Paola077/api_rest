@@ -1,7 +1,6 @@
 package org.factoriaf5.apiRest.books;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +31,18 @@ public class BookController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+
+        Optional<Book> optionalBook =  booksRepository.findByIsbn(book.getIsbn());
+
+        if (optionalBook.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        booksRepository.save(book);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
