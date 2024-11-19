@@ -19,7 +19,7 @@ public class BookController {
 
     @GetMapping
     public List<Book> getAllBooks() {
-        return this.booksRepository.findAll();
+        return booksRepository.findAll();
     }
 
     @GetMapping("/{isbn}")
@@ -46,15 +46,15 @@ public class BookController {
     }
 
     @DeleteMapping("/{isbn}")
-    public ResponseEntity<Book> deleteBookByIsbn(@PathVariable String isbn) {
+    public void deleteBookByIsbn(@PathVariable String isbn) {
         Optional<Book> optionalBook = booksRepository.findByIsbn(isbn);
 
         if (!optionalBook.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         booksRepository.deleteByIsbn(isbn);
-        return new ResponseEntity<>(HttpStatus.OK);
+        new ResponseEntity<>(HttpStatus.OK);
     }
 
    @PutMapping("/{isbn}")
@@ -69,8 +69,9 @@ public class BookController {
             bookExist.setAuthor(book.getAuthor());
 
             booksRepository.save(bookExist);
-            return ResponseEntity.ok(bookExist);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+
        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
    }
 }

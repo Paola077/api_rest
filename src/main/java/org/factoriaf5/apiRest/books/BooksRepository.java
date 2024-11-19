@@ -9,7 +9,7 @@ public interface BooksRepository {
 
     Optional<Book> findByIsbn(String isbn);
 
-    Optional<Book> save(Book book);
+    void save(Book book);
 
     void deleteByIsbn(String isbn);
 }

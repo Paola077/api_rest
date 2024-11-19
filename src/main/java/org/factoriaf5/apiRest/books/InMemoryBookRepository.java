@@ -28,9 +28,15 @@ public class InMemoryBookRepository implements BooksRepository{
     }
 
     @Override
-    public Optional<Book> save(Book book) {
-        booksDB.add(book);
-        return Optional.empty();
+    public void save(Book book) {
+        findByIsbn(book.getIsbn()).ifPresentOrElse( //Present or else es una funcion de opcional
+                existBook -> {
+                    existBook.setTitle(book.getTitle());
+                    existBook.setAuthor(book.getAuthor());
+                }, () -> {
+                    booksDB.add(book);
+                }
+        );
     }
 
     @Override
