@@ -2,7 +2,7 @@
 
 ## 🎯 Project objectives:
 
-* Introduction to the rest api 
+* Introduction to Api rest
 * Creating a controller with endpoints
 * Test endpoints with the postman
 * Getting closer little by little to Spring Boot architecture
